@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//Route::get('users/{user}', function (App\User $user) {
+//    dd($user);
+//});
+
+//Route::put('post/{id}', function ($id) {
+//    //
+//})->middleware('role:editor');
+
+Route::get('user/{id}', 'UserController@show');
