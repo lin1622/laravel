@@ -30,7 +30,13 @@ class UserController extends Controller
     public function show( Request $request ,$id)
     {
         $path = $request->path();
-        dd($path);
+        // 不包含查询字符串
+        $url = $request->url();
+
+        // 包含查询字符串
+        $url_with_query = $request->fullUrl();
+        $input = $request->all();
+        dd($input);
         return view('user.profile', ['user' => User::findOrFail($id)]);
     }
 
