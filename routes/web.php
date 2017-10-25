@@ -12,12 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome',['website'=>'aaa']);
 });
 
-Route::get('/', function (ServerRequestInterface $request) {
-    //
-});
 
 Auth::routes();
 
