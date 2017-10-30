@@ -12,7 +12,8 @@
         </div>
 
         <!-- Example row of columns -->
-        <div class="row" style="background: white;margin: 10px;">
+        <div class="row col-md-12 col-lg-12 col-sm-12" style="background: white;margin: 10px;">
+        <a href="/projects/create" class="pull-right btn btn-default btn-sm">添加项目</a>
         @foreach($company->projects as $project)
             <div class="col-lg-4">
                 <h2>{{ $project->name }}</h2>
@@ -33,6 +34,10 @@
             <h4>Actions</h4>
             <ol class="list-unstyled">
                 <li><a href="/companies/{{ $company->id }}/edit">Edit</a></li>
+                <li><a href="/projects/create">添加新项目</a></li>
+                <li><a href="/companies/index">我的公司</a></li>
+                <li><a href="/company/create">添加新公司</a></li>
+                <br>
                 <li>
                 <a
                     href="#"

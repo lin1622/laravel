@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompaniesController extends Controller
 {
@@ -28,6 +29,7 @@ class CompaniesController extends Controller
     public function create()
     {
         //
+        return view('companies.create');
     }
 
     /**
@@ -39,7 +41,24 @@ class CompaniesController extends Controller
     public function store(Request $request)
     {
         //
+        if(Auth::check()){
+            $company = Company::create([
+                'name' => $request->input('name'),
+                'description' => $request->input('description'),
+//                $request->user()->id
+                'user_id' =>Auth::user()->id
+            ]);
+
+            if($company){
+                return redirect()->route('companies.show' , ['company' => $company->id])
+                    ->with('success' , '公司创建成功');
+            }
+        }
+
+        //redirect
+        return back()->withInput()->with('errors' , '创建失败 ');
     }
+
 
     /**
      * Display the specified resource.
@@ -105,6 +124,12 @@ class CompaniesController extends Controller
     public function destroy(Company $company)
     {
         //
-        dd($company);
+
+        $findCompany = Company::find($company->id );
+        if($findCompany->delete()){
+            return redirect()->route('companies.index')
+                    ->with('success' , '删除成功');
+        }
+        return back()->withInput()->with('error' , '删除失败');
     }
 }
