@@ -7,7 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="stylesheet" href="{{ asset('css/font-awesome/css/font-awesome.min.css') }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
@@ -47,12 +47,33 @@
                             <li><a href="{{ route('register') }}">Register</a></li>
 
                         @else
-                            <li><a href="{{ route('companies.index') }}">我的company</a></li>
-                            <li><a href="{{ route('projects.index') }}">project</a></li>
-                            <li><a href="{{ route('tasks.index') }}">Tasks</a></li>
+                            <li><a href="{{ route('companies.index') }}"><i class="fa fa-building" aria-hidden="true"></i> 我的company</a></li>
+                            <li><a href="{{ route('projects.index') }}"><i class="fa fa-briefcase" aria-hidden="true"></i>project</a></li>
+                            <li><a href="{{ route('tasks.index') }}"><i class="fa fa-tasks" aria-hidden="true"></i>Tasks</a></li>
+                                @if(Auth::user()->role_id == 1)
+
+
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle"
+                                           data-toggle="dropdown" role="button" aria-expanded="false">
+                                            <i class="fa fa-user" aria-hidden="true"></i>  Admin <span class="caret"></span>
+                                        </a>
+
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="{{ route('projects.index') }}"><i class="fa fa-briefcase" aria-hidden="true"></i> All Projects</a></li>
+                                            <li><a href="{{ route('users.index') }}"><i class="fa fa-user" aria-hidden="true"></i> All Users</a></li>
+                                            <li><a href="{{ route('tasks.index') }}"><i class="fa fa-tasks" aria-hidden="true"></i> All Tasks</a></li>
+                                            <li><a href="{{ route('companies.index') }}"><i class="fa fa-building" aria-hidden="true"></i> All Companies</a></li>
+                                            <li><a href="{{ route('roles.index') }}"><i class="fa fa-envelope" aria-hidden="true"></i> All Roles</a></li>
+
+                                        </ul>
+                                    </li>
+
+                                @endif
+
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    <i class="fa fa-user" aria-hidden="true"></i>  {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">

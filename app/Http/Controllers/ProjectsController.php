@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Company;
+use App\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +35,11 @@ class ProjectsController extends Controller
     public function create( $company_id = null )
     {
         //
-        return view('projects.create', ['company_id'=>$company_id]);
+        $companies = null;
+        if(!$company_id){
+            $companies = Company::where('user_id', Auth::user()->id)->get();
+        }
+        return view('projects.create', ['company_id'=>$company_id,'companies'=>$companies]);
     }
 
     /**
@@ -46,7 +52,7 @@ class ProjectsController extends Controller
     {
         //
         if(Auth::check()){
-            $project = Company::create([
+            $project = Project::create([
                 'name' => $request->input('name'),
                 'description' => $request->input('description'),
                 'company_id' => $request->input('project_id'),
@@ -72,11 +78,8 @@ class ProjectsController extends Controller
     public function show(Project $project)
     {
         //
-        $project = Project::find($project->id);
-
+        $project = Project::find($project -> id);
         $comments = $project->comments;
-
-
         return view('projects.show', ['project'=>$project, 'comments'=> $comments ]);
     }
 
@@ -127,6 +130,16 @@ class ProjectsController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+
+        $findproject = Project::find( $project->id);
+        if($findproject->delete()){
+
+            //redirect
+            return redirect()->route('projects.index')
+                ->with('success' , 'project deleted successfully');
+        }
+
+        return back()->withInput()->with('error' , 'project could not be deleted');
+
     }
 }

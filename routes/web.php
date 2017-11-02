@@ -21,7 +21,7 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function(){
     Route::resource('companies', 'CompaniesController');
-
+    Route::get('projects/create/{company_id?}', 'ProjectsController@create');
     Route::resource('projects', 'ProjectsController');
     Route::resource('roles', 'RolesController');
     Route::resource('tasks', 'TasksController');

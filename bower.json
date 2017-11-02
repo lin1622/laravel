@@ -1,0 +1,23 @@
+{
+  "name": "laravel",
+  "description": "",
+  "main": "",
+  "authors": [
+    "linmao <839117465@qq.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lin1622/laravel",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7"
+  }
+}
+php
