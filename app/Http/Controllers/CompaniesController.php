@@ -16,12 +16,13 @@ class CompaniesController extends Controller
     public function index()
     {
         //
-        if(Auth::check()){
-            $companies = Company::where('user_id',Auth::user()->id)->get();
+        if( Auth::check() ){
 
-            return view('companies.index',['companies' => $companies]);
+
+            $companies = Company::where('user_id', Auth::user()->id)->get();
+
+             return view('companies.index', ['companies'=> $companies]);  
         }
-
         return view('auth.login');
     }
 
@@ -33,6 +34,7 @@ class CompaniesController extends Controller
     public function create()
     {
         //
+
         return view('companies.create');
     }
 
@@ -45,24 +47,25 @@ class CompaniesController extends Controller
     public function store(Request $request)
     {
         //
+
         if(Auth::check()){
             $company = Company::create([
                 'name' => $request->input('name'),
                 'description' => $request->input('description'),
-//                $request->user()->id
-                'user_id' =>Auth::user()->id
+                'user_id' => Auth::user()->id
             ]);
 
+
             if($company){
-                return redirect()->route('companies.show' , ['company' => $company->id])
-                    ->with('success' , '公司创建成功');
+                return redirect()->route('companies.show', ['company'=> $company->id])
+                ->with('success' , 'Company created successfully');
             }
+
         }
+        
+            return back()->withInput()->with('errors', 'Error creating new company');
 
-        //redirect
-        return back()->withInput()->with('errors' , '创建失败 ');
     }
-
 
     /**
      * Display the specified resource.
@@ -73,8 +76,9 @@ class CompaniesController extends Controller
     public function show(Company $company)
     {
         //
-        //$company = Company::where('id', $company->id )->first();
-        $company = Company::find($company->id );
+
+       // $company = Company::where('id', $company->id )->first();
+        $company = Company::find($company->id);
 
         return view('companies.show', ['company'=>$company]);
     }
@@ -88,8 +92,8 @@ class CompaniesController extends Controller
     public function edit(Company $company)
     {
         //
-        $company = Company::find($company->id );
-
+        $company = Company::find($company->id);
+        
         return view('companies.edit', ['company'=>$company]);
     }
 
@@ -102,21 +106,24 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, Company $company)
     {
-        //save data
+       
+      //save data
 
-        $companyUpdate = Company::where('id', $company->id)
+      $companyUpdate = Company::where('id', $company->id)
                                 ->update([
-                                    'name' => $request->input('name'),
-                                    'description' => $request->input('description')
+                                        'name'=> $request->input('name'),
+                                        'description'=> $request->input('description')
                                 ]);
 
-        if($companyUpdate){
-            return redirect()->route('companies.show', ['company'=>$company->id])
-                    ->with('success','更新成功');
-        }
+      if($companyUpdate){
+          return redirect()->route('companies.show', ['company'=> $company->id])
+          ->with('success' , 'Company updated successfully');
+      }
+      //redirect
+      return back()->withInput();
 
-        //redirect
-        return back()->withInput();
+
+      
     }
 
     /**
@@ -129,11 +136,16 @@ class CompaniesController extends Controller
     {
         //
 
-        $findCompany = Company::find($company->id );
-        if($findCompany->delete()){
+        $findCompany = Company::find( $company->id);
+		if($findCompany->delete()){
+            
+            //redirect
             return redirect()->route('companies.index')
-                    ->with('success' , '删除成功');
+            ->with('success' , 'Company deleted successfully');
         }
-        return back()->withInput()->with('error' , '删除失败');
+
+        return back()->withInput()->with('error' , 'Company could not be deleted');
+        
+
     }
 }

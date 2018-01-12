@@ -12,21 +12,30 @@
 */
 
 Route::get('/', function () {
-    return view('welcome',['website'=>'aaa']);
+    return view('welcome');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::middleware(['auth'])->group(function(){
+Route::get('/home', 'HomeController@index')->name('home');
+
+//->middleware('auth');
+
+
+Route::middleware(['auth'])->group(function () {
+
     Route::resource('companies', 'CompaniesController');
+
     Route::get('projects/create/{company_id?}', 'ProjectsController@create');
+    Route::post('projects/adduser', 'ProjectsController@adduser')->name('projects.adduser');
     Route::resource('projects', 'ProjectsController');
+    
     Route::resource('roles', 'RolesController');
     Route::resource('tasks', 'TasksController');
     Route::resource('users', 'UsersController');
     Route::resource('comments', 'CommentsController');
-});
 
+    
+});
 

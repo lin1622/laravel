@@ -8,12 +8,10 @@ class VerifyCsrfToken extends Middleware
 {
     /**
      * The URIs that should be excluded from CSRF verification.
-     * 从 CSRF 验证中排除的 URL
      *
      * @var array
      */
     protected $except = [
         //
-        'alipay/*',
     ];
 }

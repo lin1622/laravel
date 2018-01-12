@@ -15,14 +15,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
+        'name', 
+        'email', 
         'password',
         'first_name',
         'middle_name',
         'last_name',
         'city',
-        'role_id',
+        'role_id'
     ];
 
     /**
@@ -34,35 +34,32 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-//    /**
-//     * Get the route key for the model.
-//     *
-//     * @return string
-//     */
-//    public function getRouteKeyName()
-//    {
-//        return 'name';
-//    }
+  
+    
+    public function role(){
+		return $this->belongsTo('App\Role');
+    }
 
+    public function companies(){
+		return $this->hasMany('App\Company');
+    }
+    
+
+    public function tasks()
+    {
+        return $this->belongsToMany('App\Task');
+    }
+
+
+    //many to many relationship
+    public function projects()
+    {
+        return $this->belongsToMany('App\Project');
+    }
 
     public function comments()
     {
         return $this->morphMany('App\Comment', 'commentable');
     }
 
-    public function role(){
-        return $this->belongsTo('App\Role');
-    }
-
-    public function companies(){
-        return $this->hasMany('App\Company');
-    }
-
-    public function tasks(){
-        return $this->belongsToMany('App\Task');
-    }
-
-    public function projects(){
-        return $this->belongsToMany('App\Project');
-    }
 }

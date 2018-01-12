@@ -39,9 +39,9 @@ class CommentsController extends Controller
     {
         //
 
-        //
+         //
 
-        if(Auth::check()){
+         if(Auth::check()){
             $comment = Comment::create([
                 'body' => $request->input('body'),
                 'url' => $request->input('url'),
@@ -52,12 +52,12 @@ class CommentsController extends Controller
 
 
             if($comment){
-                return back()->with('success' , '评论成功');
+                return back()->with('success' , 'Comment created successfully');
             }
 
         }
-
-        return back()->withInput()->with('errors', '评论失败');
+        
+            return back()->withInput()->with('errors', 'Error creating new comment');
 
     }
 
